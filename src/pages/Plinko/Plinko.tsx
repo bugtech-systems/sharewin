@@ -143,7 +143,7 @@ const Plinko = () => {
 			const ballColor = '#ff9010'
 			const ball = Bodies.circle(ballX, heightUnit, pinSize * 1.8, {
 				restitution: 1,
-				friction: 0.6,
+				friction: 0.5,
 				label: `ball-${ballValue}-${ballX}`,
 				id: new Date().getTime(),
 				frictionAir: 0.05,
