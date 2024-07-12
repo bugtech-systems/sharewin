@@ -14,7 +14,6 @@ export class Field {
         this.sprite.addChild(this.selected);
         this.selected.visible = false;
         this.selected.anchor.set(0.5);
-
     }
 
     unselect() {

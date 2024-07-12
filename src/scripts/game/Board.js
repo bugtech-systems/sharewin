@@ -12,7 +12,7 @@ export class Board {
         this.rows = App.config.board.rows;
         this.cols = App.config.board.cols;
         this.create();
-        this.ajustPosition();
+        // this.ajustPosition();
     }
 
     create() {
@@ -59,7 +59,7 @@ export class Board {
         this.width = this.cols * this.fieldSize;
         this.height = this.rows * this.fieldSize;
         this.container.x = (window.innerWidth - this.width) / 2 + this.fieldSize / 2;
-        this.container.y = (window.innerHeight - this.height) / 2 + this.fieldSize / 2;
+        this.container.y = (400 + window.innerHeight - this.height) / 2 + this.fieldSize / 2;
     }
 
     swap(tile1, tile2) {

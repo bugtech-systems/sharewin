@@ -1,20 +1,37 @@
 import * as PIXI from "pixi.js";
 import { App } from "../system/App";
 import { Board } from "./Board";
+import { Buttons } from "./Buttons";
 import { CombinationManager } from "./CombinationManager";
     
 export class Game {
     constructor() {
         this.container = new PIXI.Container();
-        this.createBackground();
-
+        this.buttons = new Buttons();
         this.board = new Board();
+        
+        
+        
+        
+        
+        
+        this.createBackground();
+        
+        
         this.container.addChild(this.board.container);
+        this.container.addChild(this.buttons.container);
+        
+      
 
         this.board.container.on('tile-touch-start', this.onTileClick.bind(this));
 
         this.combinationManager = new CombinationManager(this.board);
+        
         this.removeStartMatches();
+        // this.ajustPosition();
+
+
+
     }
 
     removeStartMatches() {
@@ -34,10 +51,72 @@ export class Game {
     }
 
     createBackground() {
-        this.bg = App.sprite("bg");
-        this.bg.width = window.innerWidth;
+    
+        this.bg = App.sprite("jilibackground");
+        this.gameStage = App.sprite("platform");
+        this.stageFooter = App.sprite("platform_footer");
+        
+        this.stageHeader = App.sprite("platform_header");
+        this.stageHeaderMultiplier = App.sprite("win_multiplier");
+        
+        
+        // this.bg.height = 1000;
+        this.bg.width = window.innerWidth < 1000 ? window.innerWidth : 500;
         this.bg.height = window.innerHeight;
+        this.bg.x = window.innerWidth < 1000 ? 0 : (window.innerWidth - this.bg.width) / 2;
+        this.bg.y = -(window.innerHeight / 2);
+   
+        this.stageFooter.width = window.innerWidth < 1000 ? window.innerWidth : 500;
+        this.stageFooter.height = window.innerHeight / 4    ;
+        this.stageFooter.y = window.innerHeight - this.stageFooter.height ;
+        this.stageFooter.x = (window.innerWidth - this.stageFooter.width) / 2;
+        
+        
+        
+        console.log(window.width, window.innerWidth, 'width')
+        
+        this.gameStage.width = this.bg.width * 1.2;
+        this.gameStage.height =  this.bg.height / 2.5;
+        this.gameStage.y = ((this.bg.height - this.stageFooter.height)/ 2);
+        this.gameStage.x = (window.innerWidth - this.gameStage.width) / 2;
+
+        this.board.container.x = this.gameStage.x
+     
+     
+        
+        this.stageHeader.width = this.gameStage.width * .8;
+        this.stageHeader.height = this.gameStage.height * 0.15 ;
+        this.stageHeader.y =  ((this.bg.height - this.stageFooter.height) / 2);
+        this.stageHeader.x = (window.innerWidth - this.bg.width) / 2;
+        
+   /*      
+            App.app.ticker.add(() =>
+            {
+                this.stageHeader.rotation += 0.02;
+            });
+
+ */
+
+
+
+
+        
+          // Create a mask to hide overflow
+        //   const mask = new PIXI.Graphics();
+        //   mask.beginFill(0x000000);
+        //   mask.drawRect(this.bg.x , 0, this.bg.width, this.bg.height);
+        //   mask.endFill();
+  
+        //   this.container.addChild(mask);
+        //   this.container.mask = mask;
+  
+   
+        
         this.container.addChild(this.bg);
+        this.container.addChild(this.stageFooter);
+        this.container.addChild(this.gameStage);
+        this.container.addChild(this.stageHeader);
+    
     }
 
     onTileClick(tile) {
@@ -178,4 +257,13 @@ export class Game {
         this.selectedTile = tile;
         this.selectedTile.field.select();
     }
+    
+    
+    ajustPosition() {
+        this.fieldSize = this.fields[0].sprite.width;
+        this.height = this.rows * this.fieldSize;
+        this.container.x = (window.innerWidth - this.width) / 2 + this.fieldSize / 2;
+        this.container.y = (400 + window.innerHeight - this.height) / 2 + this.fieldSize / 2;
+    }
+
 }

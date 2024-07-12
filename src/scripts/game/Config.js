@@ -6,8 +6,8 @@ export const Config = {
     startScene: Game,
     tilesColors: ['blue', 'green', 'orange', 'red', 'pink', 'yellow'],
     board: {
-        rows: 8,
-        cols: 8
+        rows: 3,
+        cols: 4
     },
     combinationRules: [[
         {col: 1, row: 0}, {col: 2, row: 0},
